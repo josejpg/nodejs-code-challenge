@@ -1,33 +1,6 @@
-import express, { Request, Response, NextFunction } from 'express';
-import json from 'body-parser';
-import fetch from 'node-fetch';
-import { Product, CartContent } from './types';
+import app from './config/app';
+import routes from './config/routes';
 
-const app = express();
-
-app.use(json());
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, World!');
-});
-
-app.get('/products', async (req: Request, res: Response) => {
-  const products: Product[] = [];
-  // put your code here
-  res.send(products);
-});
-
-app.post('/login', async (req: Request, res: Response) => {
-  res.send();
-});
-
-app.post('/cart', async (req: Request, res: Response) => {
-  const cartContent: CartContent;
-  res.send(cartContent);
-});
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(404).send();
-});
+app.use('/', routes);
 
 export default app;
