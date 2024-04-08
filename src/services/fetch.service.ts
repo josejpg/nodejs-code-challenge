@@ -2,7 +2,9 @@ import fetch, { RequestInit, Response } from 'node-fetch';
 import { Logger } from './logger.service';
 import { FetchHeader } from '../models/featch-header.type';
 import { Headers } from '../models/headers.type';
-import { FetchRequest } from '../models/fetch-request.type';
+import { FetchGetRequest, FetchPostRequest, FetchRequest } from '../models/fetch-request.type';
+import { Error400 } from '../utils/errors/error-400.error';
+import { Error404 } from '../utils/errors/error-404.error';
 
 /**
  * Class Fetch
@@ -52,6 +54,16 @@ export class Fetch {
 );
     }
 
+    /**
+     * Type Guard to check if a request is a GET
+     * 
+     * @param {FetchRequest} request 
+     * @returns {FetchGetRequest}
+     */
+    private isFetchGetRequest(request: FetchRequest): request is FetchGetRequest {
+        return !('body' in request);
+    }
+
 
     /**
      * Get the url to make a call
@@ -63,17 +75,19 @@ export class Fetch {
         // Set url
         const url = new URL(request.url);
         
-        // Set filters
-        if (request.filters) {
-            for (const [key, value] of request.filters) {
-                url.searchParams.set(key, `${value}`);
+        // Set filters if is a GET
+        if (this.isFetchGetRequest(request)){
+            if (request.filters) {
+                for (const [key, value] of request.filters) {
+                    url.searchParams.set(key, `${value}`);
+                }
             }
-        }
 
-        // Set parameters
-        if (request.params) {
-            for (const [key, value] of request.params) {
-                url.searchParams.set(key, `${value}`);
+            // Set parameters
+            if (request.params) {
+                for (const [key, value] of request.params) {
+                    url.searchParams.set(key, `${value}`);
+                }
             }
         }
 
@@ -93,7 +107,7 @@ export class Fetch {
 
         // Check if method is allowed
         if(!this.allowedMethods.includes(config?.method ?? '')){
-            throw new Error(`Method ${config?.method} not allowed`)
+            throw new Error400(`Method ${config?.method} not allowed`)
         }
 
         // Retrieve url with query string from request
@@ -107,7 +121,7 @@ export class Fetch {
         // Check if response exists or an error message
         if (!response || (response as any).message) {
             const message: string = `Error from ${url}: ${(response as any).message ?? 'Missing response'}`
-            throw new Error(message);
+            throw new Error404(message);
         }
 
         return response as T;
@@ -116,10 +130,10 @@ export class Fetch {
     /**
      * GET call
      * 
-     * @param {FetchRequest} request  
+     * @param {FetchGetRequest} request  
      * @returns {T}
      */
-    public async get<T>(request: FetchRequest): Promise<T> {
+    public async get<T>(request: FetchGetRequest): Promise<T> {
         request.config = {
             ...request.config,
             method: 'GET',
@@ -131,14 +145,15 @@ export class Fetch {
     /**
      * POST call
      * 
-     * @param {FetchRequest} request 
+     * @param {FetchPostRequest} request 
      * @returns {T}
      */
-    public async post<T>(request: FetchRequest): Promise<T> {
+    public async post<T>(request: FetchPostRequest): Promise<T> {
         request.config = {
             ...request.config,
             method: 'POST',
-            headers: request.config?.headers ?? this.getHeaders()
+            headers: request.config?.headers ?? this.getHeaders(),
+            body: request.body
         }
         return this.request(request);
     }

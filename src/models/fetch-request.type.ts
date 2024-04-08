@@ -1,9 +1,18 @@
 import { RequestInit } from "node-fetch";
 import { FetchRequestFilters } from "./fetch-request-filters.type";
 
-export type FetchRequest = {
+type FetchBasic = {
     url: string;
-    filters?: Map<FetchRequestFilters, string | number>;
-    params?: Map<string, string>;
     config?: RequestInit;
 }
+
+export type FetchGetRequest = FetchBasic & {
+    filters?: Map<FetchRequestFilters, string | number>;
+    params?: Map<string, string>;
+}
+
+export type FetchPostRequest = FetchBasic & {
+    body: string;
+}
+
+export type FetchRequest = FetchGetRequest | FetchPostRequest;

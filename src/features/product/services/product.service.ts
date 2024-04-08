@@ -1,5 +1,5 @@
 import { FetchRequestFilters } from "../../../models/fetch-request-filters.type";
-import { FetchRequest } from "../../../models/fetch-request.type";
+import { FetchGetRequest } from "../../../models/fetch-request.type";
 import { Product } from "../../../models/types";
 import { Fetch } from "../../../services/fetch.service";
 import { FetchProductsResponse } from "../models/fetch-product-response.interface";
@@ -17,7 +17,7 @@ export class ProductService {
      * @returns {FetchProductsResponse}
      */
     public async getAll(filters?: Map<FetchRequestFilters, string>): Promise<FetchProductsResponse> {
-        const request: FetchRequest = {
+        const request: FetchGetRequest = {
             url: this.base_url,
             filters
         };
@@ -31,7 +31,7 @@ export class ProductService {
      * @returns {Product}
      */
     public async getById(productId: string): Promise<Product> {
-        const request: FetchRequest = {
+        const request: FetchGetRequest = {
             url: `${this.base_url}/${productId}`
         };
         return this.fetch.get<Product>(request);
@@ -45,7 +45,7 @@ export class ProductService {
      * @returns {Product}
      */
     public async search(params: Map<string, string>, filters?: Map<FetchRequestFilters, string>): Promise<FetchProductsResponse> {
-        const request: FetchRequest = {
+        const request: FetchGetRequest = {
             url: `${this.base_url}/search`,
             params,
             filters
