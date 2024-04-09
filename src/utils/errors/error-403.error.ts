@@ -1,7 +1,7 @@
 import { ErrorTui } from "./error-tui.error";
 
-export class Error404 extends ErrorTui {
+export class Error403 extends ErrorTui {
     constructor(message?: string) {
-        super(404, message);
+        super(403, message);
     }
 }

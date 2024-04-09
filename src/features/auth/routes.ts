@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { Router } from 'express';
 import { login } from './controllers/auth.controller';
 import { User } from '../../models/types';
-import { ErrorTui } from '../../utils/errors/error-tui.error';
 import { responseError, responseSuccess } from '../../utils/response';
 
 const router = Router();
@@ -15,6 +14,5 @@ router.post('/', async (req: Request, res: Response) => {
     responseError(res, err);
   }
 });
-
 
 export default router;

@@ -1,7 +1,7 @@
 import { Product } from "../../../models/types";
 import { Logger } from "../../../services/logger.service";
 import { Error400 } from "../../../utils/errors/error-400.error";
-import { Error404 } from "../../../utils/errors/error-404.error";
+import { ErrorTui } from "../../../utils/errors/error-tui.error";
 import { FetchProductsResponse } from "../models/fetch-product-response.interface";
 import { ProductService } from "../services/product.service";
 
@@ -16,11 +16,11 @@ const logger: Logger = new Logger('product.controller');
 export const getAll = async (): Promise<Product[]> => {
     try {
         const response: FetchProductsResponse = await productService.getAll();
-        logger.info('Response received: ', response);
+        logger.debug('Response received: ', response);
         return response.products.sort((productA: Product, productB: Product) => (productA.title > productB.title) ? 1 : -1)
     } catch (err: unknown) {
         // if is a custom error, throw it, in other case control it
-        if (err instanceof Error400 || err instanceof Error404 ) {
+        if (err instanceof ErrorTui ) {
             throw err;
         }
 
@@ -36,15 +36,15 @@ export const getAll = async (): Promise<Product[]> => {
 /**
  * Get a single product
  * 
- * @param {string} productId 
+ * @param {number} productId 
  * @returns {Product}
  */
-export const getById = async (productId: string): Promise<Product> => {
+export const getById = async (productId: number): Promise<Product> => {
     try {
         return await productService.getById(productId);
     } catch (err: unknown) {
         // if is a custom error, throw it, in other case control it
-        if (err instanceof Error400 || err instanceof Error404 ) {
+        if (err instanceof ErrorTui ) {
             throw err;
         }
 

@@ -27,10 +27,10 @@ export class ProductService {
     /**
      * Get a single product
      * 
-     * @param {string} productId 
+     * @param {number} productId 
      * @returns {Product}
      */
-    public async getById(productId: string): Promise<Product> {
+    public async getById(productId: number): Promise<Product> {
         const request: FetchGetRequest = {
             url: `${this.base_url}/${productId}`
         };

@@ -45,13 +45,13 @@ export class Fetch {
         return Array.from(this.headers.entries())
         .reduce(
             (headers: Headers, entry: string[]) => {
-            const key: string = entry[0];
-            const value: string = entry[1];
-            headers[key] = value
-            return headers;
-        },
-    {}
-);
+                const key: string = entry[0];
+                const value: string = entry[1];
+                headers[key] = value
+                return headers;
+            },
+            {}
+        );
     }
 
     /**
@@ -113,14 +113,14 @@ export class Fetch {
         // Retrieve url with query string from request
         const url: URL = this.getUrl(request);
 
-        this.logger.debug(`GET info from ${url} with config `, config);
+        this.logger.debug(`${config?.method} to ${url}`);
 
         // Do request
         const response: unknown = await fetch(url, config).then((res: Response) => res.json());
 
         // Check if response exists or an error message
         if (!response || (response as any).message) {
-            const message: string = `Error from ${url}: ${(response as any).message ?? 'Missing response'}`
+            const message: string = `${(response as any).message ?? 'Missing response'}`
             throw new Error404(message);
         }
 

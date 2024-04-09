@@ -8,11 +8,13 @@ router.get('/', (req: Request, res: Response) => {
   res.send('Hello, World!');
 });
 
-  router.use('/products',productsRoutes);
-  router.use('/login', authRoutes);
-  router.use('/cart', cartRoutes);
-  router.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(404).send();
-  });
+router.use('/products',productsRoutes);
+router.use('/login', authRoutes);
+router.use('/cart', cartRoutes);
 
-  export default router;
+router.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(404).send('Page not found');
+});
+
+export default router;
+  
