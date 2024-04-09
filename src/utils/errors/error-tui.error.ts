@@ -1,5 +1,8 @@
 export class ErrorTui extends Error {
-    constructor(readonly code: number, message?: string) {
-        super(message);
-    }
+	constructor(
+		readonly code: number,
+		message?: string,
+	) {
+		super(message);
+	}
 }

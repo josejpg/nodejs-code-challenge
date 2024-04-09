@@ -1,4 +1,4 @@
 export type FetchHeader = {
-    key: string;
-    value: string;
-}
+	key: string;
+	value: string;
+};

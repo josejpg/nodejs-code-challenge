@@ -1,1 +1,1 @@
-export type FetchRequestFilters = 'limit' | 'skip' | 'select';
+export type FetchRequestFilters = "limit" | "skip" | "select";

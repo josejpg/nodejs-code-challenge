@@ -1,3 +1,3 @@
-import { CartContent } from "../../../models/types"
+import type { CartContent } from "../../../models/types";
 
-export type UserCart = Map<string, CartContent>
+export type UserCart = Map<string, CartContent>;

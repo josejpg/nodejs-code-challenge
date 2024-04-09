@@ -1,6 +1,6 @@
-import { User } from "../../../models/types";
+import type { User } from "../../../models/types";
 
 export type AuthToken = User & {
-    iat: number;
-    exp: number;
-}
+	iat: number;
+	exp: number;
+};
