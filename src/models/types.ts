@@ -11,7 +11,7 @@ export type User = {
 	username: string;
 	firstName: string;
 	lastName: string;
-	avatar: string;
+	image: string;
 	token: string;
 };
 

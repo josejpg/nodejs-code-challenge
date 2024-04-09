@@ -8,7 +8,7 @@ const cartService: CartService = new CartService();
 const logger: Logger = new Logger("cart.controller");
 
 const isValidCartPayload = (data: unknown): data is CartPayload => {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	const cartPayload: any = data as any;
 	return "productId" in cartPayload && !Number.isNaN(cartPayload.productId);
 };
