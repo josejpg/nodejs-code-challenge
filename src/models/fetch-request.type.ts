@@ -1,4 +1,3 @@
-import type { RequestInit } from "node-fetch";
 import type { FetchRequestFilters } from "./fetch-request-filters.type";
 
 type FetchBasic = {

@@ -1,4 +1,3 @@
-import fetch, { type RequestInit, type Response } from "node-fetch";
 import { Logger } from "./logger.service";
 import type { FetchHeader } from "../models/featch-header.type";
 import type { Headers } from "../models/headers.type";
@@ -123,9 +122,9 @@ export class Fetch {
 
 		// Check if response exists or an error message
 		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-				if (!response || (response as any).message) {
+		if (!response || (response as any).message) {
 			const message: string = `${
-                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+				// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 				(response as any).message ?? "Missing response"
 			}`;
 			throw new Error404(message);
